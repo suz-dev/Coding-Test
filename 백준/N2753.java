@@ -1,7 +1,7 @@
-// À±³â
 
 import java.util.Scanner;
 
+// À±³â
 public class N2753 {
 
 	public static void main(String[] args) {
