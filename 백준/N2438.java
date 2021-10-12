@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * น้มุ 2438 -> 2439
+ * 2438 -> 2439
  */
 public class N2438 {
 
