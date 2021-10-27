@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 
 public class N3052 {
 
@@ -11,28 +12,23 @@ public class N3052 {
 	public static void main(String[] args) throws IOException {
 
 		/**
-		 * 나머지의 값으로 나올 수 있는 0 ~ 41 까지를 담을 수 있는 'boolean'배열 'arr'를 생성한다('boolean'배열의 'default'값은 'false'이다) 
+		 * 'HashSet'을 사용하여 배열 없이 프로그래밍 하기 ('Set'의 파생클래스로 순서개념이 없고 중복을 허용하지 않음)
 		 * 'BufferedReader'를 통해 숫자를 입력받는다
-		 * 반복문을 실행하여 입력받은 값에 %42를 실행한 값의 'index'를 'true'로 바꿔준다 
-		 * 반복문 종료 후 개수를 저장할 변수 'count'를 선언한 후 다음 반복문을 실행하여 첫번째 반복문에서 'true'로 바꿔준 값에 대하여 'count++'를 실행한다 
-		 * 반복문 종료 후 'count'값을 출력한다
+		 * 'HashSet<Integer>'로 정수타입의 변수 'h'를 선언한다
+		 * 반복문을 실행하여 'HashSet.add()'메소드를 통해 입력받은 정수를 42로 나눈 나머지값을 'HashSet'에 저장한다
+		 * 중복값이 없을 경우 'True', 중복값이 없을 경우 저장하지 않고 'False'를 반환한다
+		 * 
+		 * 반복문을 빠져나와 'HashSet'의 크기를 반환하는 'HashSet.size()'를 통해 출력한다
 		 */
-
-		boolean[] arr = new boolean[42];
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		HashSet<Integer> h = new HashSet<Integer>();
 
 		for (int i = 0; i < 10; i++) {
-			arr[Integer.parseInt(br.readLine()) % 42] = true;
+			h.add(Integer.parseInt(br.readLine()) % 42);
 		}
 
-		int count = 0;
-
-		for (boolean value : arr) {
-			if (value) {
-				count++;
-			}
-		}
-		System.out.println(count);
+		System.out.println(h.size());
 	}
 
 }
