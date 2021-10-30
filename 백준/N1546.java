@@ -1,33 +1,42 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class N1546 {
 
 	/**
-	 * 'Arrays.sort()' 메소드를 이용해 최대값 구하기
-	 * 'Scanner'를 통해 'double'형 배열 'arr'의 원소를 입력받는다
-	 * 새로운 점수의 합을 저장할 'double'형 변수 'total'을 선언한다
-	 * 'Arrays'패키지의 'sort()'를 사용하여 정렬한다(오름차순 정렬->최대값은 마지막 원소가 된다)
-	 * 반복문을 통해 새로운 점수의 합을 구하여 'total'에 저장한다
-	 * 새로운 점수의 평균을 구해야 하기 때문에 점수의 개수를 입력받았던 'arr.lenght'의 값으로 'total'를 나누어 평균을 출력한다
+	 * 배열 없이 프로그래밍 하기
+	 * 'BufferedReader'를 통해 입력 개수 'N'을 입력받는다
+	 * 'StringTokenizer'를 통해 'BufferedReader.readLine()'으로 입력받는 값을 공백으로 구분한다
+	 * 
+	 * 최대값을 저장할 변수 'max'를 선언하고 -1로 초기화시켜준다
+	 * 점수의 합을 저장할 'double'형 변수 'sum'을 선언한 후 0으로 초기화시켜준다
+	 * 
+	 * 반복문을 통해 'N'번 동안 점수를 입력받는다
+	 * 'if'문을 통해 입력받은 값이 'max'보다 클 경우 'value'를 'max'로 저장한다
+	 * 반복문이 실행될 동안 'value'값을 'sum'에 더해준다 (평균을 하나씩 구하지 않고, 점수를 먼저 더한 후 한번에 연산한다)
+	 * 
+	 * 새로운 평균값을 출력한다
 	 */
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		double[] arr = new double[sc.nextInt()];
 
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = sc.nextDouble();
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+		int max = -1;
+		double sum = 0;
+
+		for (int i = 0; i < N; i++) {
+			int value = Integer.parseInt(st.nextToken());
+
+			if (value > max) {
+				max = value;
+			}
+			sum += value;
 		}
-		sc.close();
-
-		double total = 0;
-		Arrays.sort(arr);
-
-		for (int i = 0; i < arr.length; i++) {
-			total += ((arr[i] / arr[arr.length - 1]) * 100);
-
-		}
-		System.out.println(total / arr.length);
+		System.out.println(((sum / max) * 100 / N));
 	}
 }
