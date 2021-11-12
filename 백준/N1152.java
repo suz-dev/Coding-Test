@@ -1,32 +1,18 @@
-import java.io.IOException;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class N1152 {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String S = sc.nextLine();
+		sc.close();
 
-		int cnt = 0; // 단어의 개수
-		int pre_str = 32; // 이전 단어
-		int str; // 입력받은 단어
+		// 입력받은 'S'에 대해 공백을 기준으로 나눈 토큰들을 'st'에 저장
+		StringTokenizer st = new StringTokenizer(S, " ");
 
-		while (true) {
-			str = System.in.read();
-			
-			if (str == 32) { // 'str'이 공백일 때
-				if (pre_str != 32) {
-					cnt++;
-				}
-			} else if (str == 10) { // 'str'이 개행일 때
-
-				if (pre_str != 32) {
-					cnt++;
-				}
-				break;
-
-			}
-			pre_str = str; // 'pre_str'를 'str'로 대치
-		}
-
-		System.out.println(cnt);
+		// 'countTokens()': 토큰의 개수를 반환
+		System.out.println(st.countTokens());
 	}
 
 }
