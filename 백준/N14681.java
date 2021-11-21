@@ -1,7 +1,6 @@
 
 import java.util.Scanner;
 
-//백준 if문 단계별
 public class N14681 {
 	
 	public static void main(String[] args) {

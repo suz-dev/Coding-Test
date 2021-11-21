@@ -1,23 +1,21 @@
 import java.util.Scanner;
 
+// re
 public class N2908 {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);	
-		int[] arr = new int[2];
 		
-		int max = 0;
-
-		for (int i = 0; i < arr.length; i++) {
-			int A = sc.nextInt();
-			arr[i] = (A % 10) * 100 + ((A / 10) % 10) * 10 + (A / 100);
-
-			if (arr[i] > max) {
-				max = arr[i];
-			}
-		}
+		int A = sc.nextInt();
+		int B = sc.nextInt();
+		
 		sc.close();
-		System.out.println(max);
+		
+		
+		A = Integer.parseInt(new StringBuilder().append(A).reverse().toString());
+		B = Integer.parseInt(new StringBuilder().append(A).reverse().toString());
+		
+		System.out.println(A > B? A : B);
 	}
 
 }
