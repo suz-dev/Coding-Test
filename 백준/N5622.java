@@ -1,48 +1,40 @@
-import java.util.Scanner;
-
+import java.io.IOException;
+ 
 public class N5622 {
-
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		String s = sc.nextLine();
+	
+	public static void main(String[] args) throws IOException {
 		
 		int cnt = 0;
-		int k = s.length();
+		int value;
 		
-		for(int i = 0; i < k; i++) {
-			switch(s.charAt(i)) {
+		while(true) {
 			
-			case 'A' : case 'B' : case 'C' :
-				cnt += 3;
-				break;
-				
-			case 'D' : case 'E' : case 'F' :
-				cnt += 4;
-				break;
-				
-			case 'G' : case 'H' : case 'I' :
-				cnt += 5;
-				break;
-			case 'J' : case 'K' : case 'L' :
-				cnt += 6;
-				break;
-			case 'M' : case 'N' : case 'O' :
-				cnt += 7;
-				break;
-			case 'P' : case 'Q' : case 'R' : case 'S' :
-				cnt += 8;
-				break;
-			case 'T' : case 'U' : case 'V' :
-				cnt += 9;
-				break;
-			case 'W' : case 'X' : case 'Y' : case 'Z' :
-				cnt += 10;
+			value = System.in.read();
+			
+			if(value == '\n') {
 				break;
 			}
 			
+			if(value < 'D') {
+				cnt += 3;
+			}else if(value < 'G') {
+				cnt += 4;
+			}else if(value < 'J') {
+				cnt += 5;
+			}else if(value < 'M') {
+				cnt += 6;
+			}else if(value < 'P') {
+				cnt += 7;
+			}else if(value < 'T') {
+				cnt += 8;
+			}else if(value < 'W') {
+				cnt += 9;
+			}else {
+				cnt += 10;
+			}
+			
+			
 		}
-		System.out.println(cnt);
-
+		System.out.print(cnt);
 	}
-
 }
