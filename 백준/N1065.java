@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-// 한수 문제
+// 한수(각 자리수가 수열을 이루는 수) 문제
 
 public class N1065 {
 
@@ -31,11 +31,17 @@ public class N1065 {
 
 			for (int i = 100; i <= num; i++) {
 
-				if ((i / 100) - ((i % 100) / 10) == ((i % 100) / 10) - (i % 10)) {
+				int hun = i / 100; // 백의 자릿수
+				int ten = (i / 10) % 10; // 십의 자릿수
+				int one = i % 10; // 일의 자릿수
+
+				if ((hun - ten) == (ten - one)) { // 각 자릿수가 수열을 이룸
 					cnt++;
 				}
 			}
 		}
+
 		return cnt;
+
 	}
 }
