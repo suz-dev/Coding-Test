@@ -10,7 +10,7 @@ class Solution {
 
 			if (nums[i] == 1) {
 				cnt++;
-				result = Math.max(cnt, result); // if문 대신 Math.max()메소드 활용
+				result = Math.max(cnt, result); // 조건문 대신 Math.max()메소드 활용
 			} else {
 				cnt = 0;
 			}
