@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class SquaresOfASortedArray {
-	
+
 	// Time Complexity: O(N log N), Space Complexity: O(log N)
 
 	public int[] sortedSquares(int[] nums) {

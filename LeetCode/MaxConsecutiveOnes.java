@@ -1,7 +1,7 @@
 
-class Solution {
+public class MaxConsecutiveOnes {
 
-	public static int MaxConsecutiveOnes(int[] nums) {
+	public static int findMaxConsecutiveOnes(int[] nums) {
 
 		int cnt = 0;
 		int result = 0;
@@ -19,3 +19,4 @@ class Solution {
 	}
 
 }
+
