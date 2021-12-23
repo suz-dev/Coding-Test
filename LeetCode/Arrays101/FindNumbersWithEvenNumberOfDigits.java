@@ -4,22 +4,22 @@ public class FindNumbersWithEvenNumberOfDigits {
 
 	public int findNumbers(int[] nums) {
 
-		int even = 0; // ÀÚ¸´¼öÀÇ °³¼ö°¡ Â¦¼öÀÎ ¿ä¼Ò
-		int cnt = 0; // ÀÚ¸´¼öÀÇ ¼ö
+		int even = 0; // ìë¦¿ìˆ˜ì˜ ê°œìˆ˜ê°€ ì§ìˆ˜ì¸ ìš”ì†Œ
+		int cnt = 0; // ìë¦¿ìˆ˜ì˜ ìˆ˜
 
 		for (int i = 0; i < nums.length; i++) {
-			while (nums[i] > 0) { // nums[i]°¡ 0º¸´Ù Å¬ µ¿¾È ¹İº¹
-				nums[i] /= 10; // 10¾¿ ³ª´©¾î ÀÚ¸´¼ö ±¸ÇÏ±â
-				cnt++; // 10¾¿ ³ª´«¸¸Å­ cnt°ª +1
+			while (nums[i] > 0) { // nums[i]ê°€ 0ë³´ë‹¤ í´ ë™ì•ˆ ë°˜ë³µ
+				nums[i] /= 10; // 10ì”© ë‚˜ëˆ„ì–´ ìë¦¿ìˆ˜ êµ¬í•˜ê¸°
+				cnt++; // 10ì”© ë‚˜ëˆˆë§Œí¼ cntê°’ +1
 			}
 
-			if (cnt % 2 == 0) { // cnt°ªÀÌ Â¦¼öÀÏ °æ¿ì even++ ½ÇÇà
+			if (cnt % 2 == 0) { // cntê°’ì´ ì§ìˆ˜ì¼ ê²½ìš° even++ ì‹¤í–‰
 				even++;
 			}
-			cnt = 0; // ´ÙÀ½ ¿ä¼Ò¸¦ À§ÇØ cnt °ªÀ» 0À¸·Î ¼³Á¤
+			cnt = 0; // ë‹¤ìŒ ìš”ì†Œë¥¼ ìœ„í•´ cnt ê°’ì„ 0ìœ¼ë¡œ ì„¤ì •
 		}
 
-		return even; // Â¦¼ö ÀÚ¸®¼öÀÇ ¼ıÀÚÀÇ °³¼ö even°ª ¸®ÅÏ
+		return even; // ì§ìˆ˜ ìë¦¬ìˆ˜ì˜ ìˆ«ìì˜ ê°œìˆ˜ evenê°’ ë¦¬í„´
 	}
 
 }

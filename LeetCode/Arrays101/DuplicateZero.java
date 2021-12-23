@@ -1,21 +1,21 @@
 package arrays101;
 
 public class DuplicateZero {
-	
-	//Input: arr = [1,0,2,3,0,4,5,0]
-	//Output: [1,0,0,2,3,0,0,4]
-	//Explanation: After calling your function, the input array is modified to: [1,0,0,2,3,0,0,4]
+
+	// Input: arr = [1,0,2,3,0,4,5,0]
+	// Output: [1,0,0,2,3,0,0,4]
+	// Explanation: After calling your function, the input array is modified to:
+	// [1,0,0,2,3,0,0,4]
 
 	public void duplicateZeros(int[] arr) {
 
-		// arr[i]ÀÇ ¿ä¼Ò¸¦ ÇÑÄ­¾¿ µÚ·Î ¹Ğ¾î¾ß ÇÏ±â ¶§¹®¿¡ ±æÀÌ´Â arr.length-1 ·Î ¼³Á¤
+		// arr[i]ì˜ ìš”ì†Œë¥¼ í•œì¹¸ì”© ë’¤ë¡œ ë°€ì–´ì•¼ í•˜ê¸° ë•Œë¬¸ì— ê¸¸ì´ëŠ” arr.length-1 ë¡œ ì„¤ì •
 		for (int i = 0; i < arr.length - 1; i++) {
- 
+
 			/*
-			 * arr[i] == 0 ÀÏ °æ¿ì¸¸ ½ÇÇà
-			 * arr[3]ÀÏ °æ¿ì arr.length = 4 ÀÌ±â ¶§¹®¿¡ j = arr.length - 2 ·Î ÃÊ±âÈ­ÇÑ´Ù
-			 * ¹İº¹¹®À» ÅëÇØ arr[j + 1]ÀÇ ¿ä¼ÒºÎÅÍ arr[j] ¿ä¼Ò±îÁö ÇÑÄ­¾¿ µÚ·Î ÀÌµ¿½ÃÅ²´Ù
-			 * ¿ä¼ÒÀÌµ¿ÀÌ ³¡³ª¸é i++¸¦ ½ÇÇàÇÑ µÚ ºñ¾îÀÖ´Â arr[i]¿¡ 0À» ³Ö¾îÁØ´Ù
+			 * arr[i] == 0 ì¼ ê²½ìš°ë§Œ ì‹¤í–‰ arr[3]ì¼ ê²½ìš° arr.length = 4 ì´ê¸° ë•Œë¬¸ì— j = arr.length - 2 ë¡œ
+			 * ì´ˆê¸°í™”í•œë‹¤ ë°˜ë³µë¬¸ì„ í†µí•´ arr[j + 1]ì˜ ìš”ì†Œë¶€í„° arr[j] ìš”ì†Œê¹Œì§€ í•œì¹¸ì”© ë’¤ë¡œ ì´ë™ì‹œí‚¨ë‹¤ ìš”ì†Œì´ë™ì´ ëë‚˜ë©´ i++ë¥¼ ì‹¤í–‰í•œ ë’¤
+			 * ë¹„ì–´ìˆëŠ” arr[i]ì— 0ì„ ë„£ì–´ì¤€ë‹¤
 			 */
 			if (arr[i] == 0) {
 				for (int j = arr.length - 2; j > i; j--) {
@@ -28,4 +28,3 @@ public class DuplicateZero {
 	}
 
 }
-

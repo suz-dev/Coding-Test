@@ -1,4 +1,5 @@
 package arrays101;
+
 import java.util.Arrays;
 
 public class SquaresOfASortedArray {
@@ -7,13 +8,13 @@ public class SquaresOfASortedArray {
 
 	public int[] sortedSquares(int[] nums) {
 
-		int[] arr = new int[nums.length]; // nums¹è¿­ÀÇ ¿ä¼ÒµéÀ» °¢°¢ Á¦°öÇÏ¿© ÀúÀåÇÒ ¹è¿­ arr ¼±¾ğ
+		int[] arr = new int[nums.length]; // nums ë°°ì—´ì˜ ìš”ì†Œë“¤ì„ ê°ê° ì œê³±í•˜ì—¬ ì €ì¥í•  ë°°ì—´ arr ì„ ì–¸
 
 		for (int i = 0; i < nums.length; i++) {
 			arr[i] *= arr[i];
 		}
 
-		Arrays.sort(arr); // ¿À¸§Â÷¼ø Á¤·Ä ¸Ş¼Òµå
+		Arrays.sort(arr); // ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬ ë©”ì†Œë“œ
 		return arr;
 	}
 }
