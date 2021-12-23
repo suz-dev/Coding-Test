@@ -1,3 +1,4 @@
+package arrays101;
 
 public class FindNumbersWithEvenNumberOfDigits {
 
@@ -15,7 +16,7 @@ public class FindNumbersWithEvenNumberOfDigits {
 			if (cnt % 2 == 0) { // cnt값이 짝수일 경우 even++ 실행
 				even++;
 			}
-			cnt = 0; // 다음 요소를 위해 cnt 값 0으로 설정
+			cnt = 0; // 다음 요소를 위해 cnt 값을 0으로 설정
 		}
 
 		return even; // 짝수 자리수의 숫자의 개수 even값 리턴

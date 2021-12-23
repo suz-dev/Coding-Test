@@ -1,3 +1,4 @@
+package arrays101;
 import java.util.Arrays;
 
 public class SquaresOfASortedArray {

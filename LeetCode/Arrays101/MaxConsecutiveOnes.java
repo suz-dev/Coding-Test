@@ -1,3 +1,4 @@
+package arrays101;
 
 public class MaxConsecutiveOnes {
 
@@ -10,7 +11,7 @@ public class MaxConsecutiveOnes {
 
 			if (nums[i] == 1) {
 				cnt++;
-				result = Math.max(cnt, result); // 조건문 대신 Math.max()메소드 활용
+				result = Math.max(cnt, result); // 조건�? ???? Math.max()�????? ????
 			} else {
 				cnt = 0;
 			}

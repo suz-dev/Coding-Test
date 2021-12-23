@@ -1,3 +1,4 @@
+package arrays101;
 
 public class DuplicateZero {
 	
