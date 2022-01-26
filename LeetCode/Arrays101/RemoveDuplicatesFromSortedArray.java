@@ -10,7 +10,7 @@ public class RemoveDuplicatesFromSortedArray {
 		int i = 0; // 배열의 인덱스 표시
 
 		for (int n : nums) { // 향상된 for문을 통해 배열 원소 추출
-			if (i == 0 || n > nums[i - 1]) { // 배열의 인덱스가 0이거나, nums[i]의 요소가 nums[i - 1] 보다 클 때
+			if (i  == 0 || n > nums[i - 1]) { // 배열의 인덱스가 0이거나, nums[i]의 요소(n)가 nums[i - 1] 보다 클 때
 				nums[i] = n; // 중복배열 제외 추출
 				i++;
 			}
