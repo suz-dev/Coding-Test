@@ -1,6 +1,5 @@
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 
 /*
@@ -21,15 +20,13 @@ public class N11650 {
 			arr[i][1] = sc.nextInt(); // y좌표 위치
 		}
 
-		// Comparator
-		Arrays.sort(arr, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				if (o1[0] == o2[0]) {
-					return o1[1] - o2[1];
-				} else {
-					return o1[0] - o2[0];
-				}
+		// Comparator (람다 사용)
+		Arrays.sort(arr, (o1, o2) -> {
+
+			if (o1[0] == o2[0]) {
+				return o1[1] - o2[1];
+			} else {
+				return o1[0] - o2[0];
 			}
 		});
 
