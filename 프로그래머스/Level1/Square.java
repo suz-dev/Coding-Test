@@ -7,15 +7,11 @@ package Level1;
 public class Square {
 
 	public long solution(long n) {
-		long answer = 0;
+		long answer = -1;
+		long sqrt = (long) Math.sqrt(n);
 
-		for (int i = 0; i * i <= n; i++) {
-			if (i * i == n) {
-				answer = (i + 1) * (i + 1);
-			} else {
-				answer = -1;
-			}
-
+		if (Math.pow(sqrt, 2) == n) {
+			answer = (long) Math.pow(sqrt + 1, 2);
 		}
 
 		return answer;
