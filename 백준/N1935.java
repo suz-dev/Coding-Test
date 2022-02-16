@@ -5,31 +5,47 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/*
+ * 후위 표기식2
+ * 
+ * 입력 - BufferedReader 사용
+ * 1. 피연산자의 개수 int N
+ * 2. 후위 표기식 String (피연산자 + 연산자)
+ * 3. 피연산자에 대응하는 값 int
+ * 
+ * 동작
+ * 1. 연산을 수행하는 메서드 별도 구현
+ * 2. 피연산자에 대응하는 값을 저장할 HashMap 생성
+ * 피연산자에 대해 입력받는 숫자와 key-value로 Map에 저장
+ * 
+ * 3. 연산을 저장할 Stack 생성
+ * String.length만큼 반복문 실행
+ * - 피연산자일 경우 Stack에 map의 value값 push
+ * - 연산자일 경우 Stack에 저장한 값 두 개를 pop하여 연산 메서드 실행
+ * 
+ * 출력
+ * 연산 결과를 소수점 둘째 자리까지 출력
+ */
 public class N1935 {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine()); // 피연산자 개수
+		String cal = br.readLine(); // 연산식
 
-		int N = Integer.parseInt(br.readLine()); // 연산자 개수
-		String input = br.readLine(); // 연산식 입력받기
-
-		Map<Character, Integer> map = new HashMap<>();
-
-		char key = 'A'; // 피연산자는 A~Z
-		for (int i = 0; i < N; i++) { // 피연산자의 개수에 해당하는 수 입력받아 map에 put
+		Map<Character, Integer> map = new HashMap<Character, Integer>();
+		char key = 'A';
+		for (int i = 0; i < N; i++) {
 			map.put(key, Integer.parseInt(br.readLine()));
 			key++;
 		}
 
-		Stack<Double> stack = new Stack<Double>();
-
-		// input 문자열에 대해 char[]로 바꾼 만큼 반복
-		for (char c : input.toCharArray()) {
-			if (Character.isAlphabetic(c)) { // c번째 문자에 대해 영문자 확인 - true 일 때
-				stack.push(Double.valueOf(map.get(c))); // c번째 char에 대한 value값을 double형으로 stack에 저장
-			} else { // 영문자가 아닐 경우
-				double tmp = calculate(stack.pop(), stack.pop(), c); // stack의 요소 두개를 뽑아 calculate메소드 실행
-				stack.push(tmp); // 연산 결과를 stack에 push
+		Stack<Double> stack = new Stack<>();
+		for (char c : cal.toCharArray()) {
+			if (Character.isAlphabetic(c)) {
+				stack.push(Double.valueOf(map.get(c)));
+			} else {
+				stack.push(calculate(stack.pop(), stack.pop(), c));
 			}
 		}
 
@@ -37,10 +53,10 @@ public class N1935 {
 
 	}
 
-	// 연산을 수행할 메서드
-	private static double calculate(double num1, double num2, char ch) {
+	// 연산 메서드 구현
+	private static double calculate(double num1, double num2, char c) {
 
-		switch (ch) {
+		switch (c) {
 		case '+':
 			return num2 + num1;
 		case '-':
@@ -51,7 +67,6 @@ public class N1935 {
 			return num2 / num1;
 		default:
 			return -1;
-
 		}
 	}
 
