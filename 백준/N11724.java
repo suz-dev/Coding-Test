@@ -47,12 +47,10 @@ public class N11724 {
 
 	public static void dfs(int start) {
 
-		// 방문하였을 경우 true
 		visit[start] = true;
 
-		// 방문 배열에서 간선이 연결되어 있고, 방문을 하지 않았을 경우 dfs 탐색
-		for (int i = 1; i < N; i++) {
-			if (adj[start][i] == 1 && !visit[i]) {
+		for (int i = 1; i < N + 1; i++) {
+			if (adj[start][i] == 1 && visit[i] == false) {
 				dfs(i);
 			}
 		}
