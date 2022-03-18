@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-// 참조  https://jangcenter.tistory.com/116
-
 public class 신고결과받기 {
 
 	public int[] solution(String[] id_list, String[] report, int k) {
