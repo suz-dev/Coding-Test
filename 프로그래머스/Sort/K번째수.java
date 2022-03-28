@@ -1,7 +1,6 @@
 package Sort;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 /*
  * 입력
@@ -22,21 +21,10 @@ public class K번째수 {
 	public int[] solution(int[] array, int[][] commands) {
 		int[] answer = new int[commands.length];
 
-		for (int a = 0; a < commands.length; a++) {
-
-			ArrayList<Integer> list = new ArrayList<Integer>();
-
-			int i = commands[a][0];
-			int j = commands[a][1];
-			int k = commands[a][2];
-
-			for (int b = i - 1; b < j; b++) {
-				list.add(array[b]);
-			}
-
-			Collections.sort(list);
-
-			answer[a] = list.get(k - 1);
+		for (int i = 0; i < commands.length; i++) {
+			int[] tmp = Arrays.copyOfRange(array, commands[i][0] - 1, commands[i][1]);
+			Arrays.sort(tmp);
+			answer[i] = tmp[commands[i][2] - 1];
 
 		}
 
