@@ -9,7 +9,7 @@ public class 시저암호 {
 
 			char ch = s.charAt(i);
 
-			if (ch >= 'A' && ch <= 'Z') { // 대문자
+			if (Character.isUpperCase(ch)) { // 대문자
 				if (ch + n <= 'Z') {
 					answer += (char) (ch + n);
 				} else {
@@ -17,7 +17,7 @@ public class 시저암호 {
 				}
 			}
 
-			if (ch >= 'a' && ch <= 'z') { // 소문자
+			if (Character.isLowerCase(ch)) { // 소문자
 				if (ch + n <= 'z') {
 					answer += (char) (ch + n);
 				} else {
@@ -25,7 +25,7 @@ public class 시저암호 {
 				}
 			}
 
-			if (ch == ' ') {
+			if (ch == ' ') { // 공백
 				answer += ' ';
 			}
 
