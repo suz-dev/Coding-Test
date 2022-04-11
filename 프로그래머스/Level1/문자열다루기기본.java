@@ -5,9 +5,7 @@ public class 문자열다루기기본 {
 		boolean answer = true;
 
 		if (s.length() == 4 || s.length() == 6) {
-			try {
-				Integer.parseInt(s);
-			} catch (NumberFormatException e) {	// 예외처리는 실제상황에서만 쓸 것
+			if (!s.matches("^[0-9]*$")) { // 정규식 사용
 				answer = false;
 			}
 		} else {
