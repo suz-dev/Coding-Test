@@ -1,48 +1,49 @@
 package Kakao;
 
-import java.util.LinkedList;
+import java.util.Stack;
 
 public class 다트게임 {
 	public int solution(String dartResult) {
 		int answer = 0;
-
 		char arr[] = dartResult.toCharArray();
 
-		LinkedList<Integer> que = new LinkedList<Integer>();
-		
+		Stack<Integer> stack = new Stack<Integer>();
+		stack.push(0);
+
 		for (int i = 0; i < arr.length; i++) {
-			if (i + 1 < arr.length && arr[i] == '1' && arr[i + 1] == '0') {
-				que.add(10);
-				i++;
-			} else if (arr[i] == '0' || (arr[i] >= '1' && arr[i] <= '9')) {
-				que.add(arr[i] - '0');
-			} else if (arr[i] == 'S') {
-				que.add((int) Math.pow(que.pollLast(), 1));
-
+			if (arr[i] == 'S') {
+				int num = stack.pop();
+				stack.push(num);
 			} else if (arr[i] == 'D') {
-				que.add((int) Math.pow(que.pollLast(), 2));
-
+				int num = stack.pop();
+				stack.push(num * num);
 			} else if (arr[i] == 'T') {
-				que.add((int) Math.pow(que.pollLast(), 3));
+				int num = stack.pop();
+				stack.push(num * num * num);
 			} else if (arr[i] == '*') {
-				if (que.size() == 1) {
-					int temp1 = que.pollLast() * 2;
-					que.add(temp1);
-
-				} else {
-					int temp2 = que.pollLast() * 2;
-					int temp1 = que.pollLast() * 2;
-					que.add(temp1);
-					que.add(temp2);
-
-				}
+				int num = stack.pop();
+				int num2 = stack.pop();
+				stack.push(num2 * 2);
+				stack.push(num * 2);
 			} else if (arr[i] == '#') {
-				que.add(que.pollLast() * -1);
+				int num = stack.pop();
+				stack.push(num * -1);
+			} else {
+				int num = arr[i] - '0';
+				char num2 = arr[i + 1];
+				if (num == 1 && num2 == '0') {
+					stack.push(10);
+					i += 1;
+				} else {
+					stack.push(num);
+				}
 			}
 		}
-		for (Integer i : que) {
-			answer += i;
+		
+		for (int i = 0; i < 3; i++) {
+			answer += stack.pop();
 		}
+		
 		return answer;
 	}
 }
