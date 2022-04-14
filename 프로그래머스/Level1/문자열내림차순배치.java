@@ -8,10 +8,8 @@ public class 문자열내림차순배치 {
 
 		char[] ch = s.toCharArray();
 		Arrays.sort(ch);
-
-		for (int i = ch.length - 1; i >= 0; i--) {
-			answer += ch[i];
-		}
+		answer = new StringBuilder(new String(ch)).reverse().toString();
+		
 		return answer;
 	}
 }
