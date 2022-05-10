@@ -1,51 +1,46 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
-// ¹é¸¸ ÀåÀÚ ÇÁ·ÎÁ§Æ®
+// ë°±ë§Œ ì¥ì í”„ë¡œì íŠ¸
 public class N1859 {
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		int T = br.read(); // TC °³¼ö
-		for (int i = 1; i <= T; i++) {
-			int N = br.read(); // ¹°°Ç °¡°İ ¿¹Ãø °¡´É ÀÏ¼ö
-			String[] S = br.readLine().split(" ");
-
-			System.out.println("#" + i + " " + Days(N, S));
-		}
-	}
-
-	public static Long Days(int n, String[] s) {
+	public static void main(String[] args) {
+		Queue<Integer> que = new LinkedList<Integer>();
 		Long cost = 0L;
 
-		Queue<Integer> que = new LinkedList<Integer>();
-		for (String i : s) {
-			que.add(Integer.parseInt(i));
-		}
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt(); // TC ê°œìˆ˜
 
-		int max = 0;	// ÆÇ¸Å ÃÖ´ë°¡
-		for (int i : que) {
-			max = Math.max(max, i);
-		}
+		for (int i = 1; i <= T; i++) {
+			int N = sc.nextInt(); // ë¬¼ê±´ ê°€ê²© ì˜ˆì¸¡ ê°€ëŠ¥ ì¼ìˆ˜
+			String[] S = sc.next().split(" ");	// ë‚ ì§œë³„ ë¬¼ê±´ ê°€ê²©
 
-		while (!que.isEmpty()) {
-
-			if (que.peek() < max) {
-				cost += max - que.poll(); // ÆÇ¸Å°¡ - ±¸¸Å°¡
-			} else if (que.peek() == max) {
-				que.poll();
-				for (int i : que) { // max°ª Àç¼³Á¤
-					max = Math.max(max, i);
-				}
-
+			for (int j = 0; j < S.length; j++) {
+				que.add(Integer.parseInt(S[j]));
 			}
-		}
 
-		return cost;
+			int max = 0; // íŒë§¤ ìµœëŒ€ê°€
+			for (int j : que) {
+				max = Math.max(max, i);
+			}
+
+			while (!que.isEmpty()) {
+
+				if (que.peek() < max) {
+					cost += max - que.poll(); // íŒë§¤ê°€ - êµ¬ë§¤ê°€
+				} else if (que.peek() == max) {
+					que.poll();
+					for (int j : que) { // maxê°’ ì¬ì„¤ì •
+						max = Math.max(max, i);
+					}
+
+				}
+			}
+			
+			System.out.println(cost);
+
+		}
 	}
 
 }
