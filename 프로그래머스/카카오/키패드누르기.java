@@ -1,73 +1,49 @@
 package Kakao;
 
-// 14, 17, 18, 19 실패 왜?
-public class 키패드누르기 {
-
-	static int[][] thumb = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { -1, 0, -1 } };
-	static int[] left = { 3, 0 }; // *
-	static int[] right = { 3, 2 }; // #
-
+class 키패드누르기 {
 	public String solution(int[] numbers, String hand) {
 		String answer = "";
 
+		int left = 10;	// *
+		int right = 12;	// #
+
 		for (int i : numbers) {
-			answer += keypad(i, hand);
+
+			if (i == 0)
+				i = 11;
+
+			if (i == 1 || i == 4 || i == 7) {
+				answer += "L";
+				left = i;
+			} else if (i == 3 || i == 6 || i == 9) {
+				answer += "R";
+				right = i;
+			} else {
+
+				// 왼-오 거리 비교
+				int absL = Math.abs(left - i) / 3 + Math.abs(left - i) % 3;
+				int absR = Math.abs(right - i) / 3 + Math.abs(right - i) % 3;
+				
+				if(absL < absR) {
+					answer += "L";
+					left = i;
+				}else if(absL > absR) {
+					answer += "R";
+					right = i;
+				}else {
+					if(hand.equals("left")) {
+						answer += "L";
+						left = i;
+					}else {
+						answer += "R";
+						right = i;
+					}
+				}
+
+			}
+
 		}
 
 		return answer;
-	}
-
-	public String keypad(int a, String hand) {
-		String k = "";
-
-		for (int i = 0; i < thumb.length; i++) {
-			for (int j = 0; j < thumb[i].length; j++) {
-
-				if (thumb[i][j] == a) {
-
-					if (a == 1 || a == 4 || a == 7) {
-						left[0] = i;
-						left[1] = j;
-						k = "L";
-
-					} else if (a == 3 || a == 6 || a == 9) {
-						right[0] = i;
-						right[1] = j;
-						k = "R";
-
-					} else {
-						k += middleNum(i, j, hand);
-					}
-				}
-			}
-		}
-		return k;
-	}
-
-	public String middleNum(int row, int column, String hand) {
-		String k = "";
-
-		// 손가락-숫자 거리
-		int absL = Math.abs(row - left[0]) + Math.abs(column - left[1]);
-		int absR = Math.abs(row - right[0]) + Math.abs(column - right[1]);
-
-		System.out.print(absL + " " + absR);
-		System.out.println();
-
-		if (absL == absR) {
-			k = Character.toString(hand.charAt(0)).toUpperCase();
-		} else {
-			k = absL < absR ? "L" : "R";
-		}
-
-		if (k == "L") {
-			left[0] = row;
-			left[1] = column;
-		} else {
-			right[0] = row;
-			right[1] = column;
-		}
-
-		return k;
 	}
 }
