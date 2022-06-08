@@ -1,6 +1,5 @@
 package Level1;
 
-// 런타임 에러
 public class 체육복 {
 	public int solution(int n, int[] lost, int[] reserve) {
 		int answer = n;
