@@ -1,33 +1,35 @@
 package Level1;
 
-import java.util.Arrays;
-
 // 런타임 에러
 public class 체육복 {
 	public int solution(int n, int[] lost, int[] reserve) {
-		int answer = n - lost.length;
+		int answer = n;
 
-		Arrays.sort(lost);
-		Arrays.sort(reserve);
+		int[] locker = new int[n + 2];
 
-		for (int i = 0; i < lost.length; i++) {
-			for (int j = 0; j < reserve.length; j++) {
-				if (lost[i] == reserve[j]) {
-					answer++;
-					lost[i] = -1;
-					reserve[j] = -1;
-					break;
+		for (int i : lost) {
+			locker[i]--; // -1
+		}
+		for (int i : reserve) {
+			locker[i]++; // 1
+		}
+
+		for (int i = 1; i < locker.length - 1; i++) {
+
+			if (locker[i] == -1) {
+				if (locker[i - 1] == 1) {
+					locker[i]++;
+					locker[i - 1]--;
+				} else if (locker[i + 1] == 1) {
+					locker[i]++;
+					locker[i + 1]--;
 				}
 			}
 		}
 
-		for (int i = 0; i < lost.length; i++) {
-			for (int j = 0; j < reserve.length; j++) {
-				if (lost[i] - 1 == reserve[j] || lost[i] + 1 == reserve[j]) {
-					answer++;
-					reserve[j] = -1;
-					break;
-				}
+		for (int i : locker) {
+			if (i == -1) {
+				answer--;
 			}
 		}
 
