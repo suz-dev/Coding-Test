@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 // 홀수만 더하기
-public class N2072 {
+public class N2072_홀수만더하기 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
