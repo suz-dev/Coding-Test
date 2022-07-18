@@ -25,7 +25,7 @@ public class N1979_어디에단어가들어갈수있을까 {
 
 			int sum = 0;
 
-			// ����
+			// 가로
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 
@@ -45,7 +45,7 @@ public class N1979_어디에단어가들어갈수있을까 {
 				sum = 0;
 			}
 
-			// ����
+			// 세로
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 
