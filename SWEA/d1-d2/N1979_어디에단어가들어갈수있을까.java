@@ -13,7 +13,7 @@ public class N1979_어디에단어가들어갈수있을까 {
 		for (int t = 0; t < T; t++) {
 
 			int N = sc.nextInt();
-			int K = sc.nextInt(); // �ܾ� ����
+			int K = sc.nextInt(); // 단어길이
 
 			int[][] puzzle = new int[N][N];
 
