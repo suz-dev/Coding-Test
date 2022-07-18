@@ -1,3 +1,4 @@
+package d1_d2;
 import java.util.Scanner;
 
 // 홀수만 더하기

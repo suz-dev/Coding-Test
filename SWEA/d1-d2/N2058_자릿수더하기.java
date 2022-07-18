@@ -1,3 +1,4 @@
+package d1_d2;
 import java.util.Scanner;
 
 public class N2058_자릿수더하기 {

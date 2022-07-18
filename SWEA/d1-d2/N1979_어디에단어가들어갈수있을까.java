@@ -1,6 +1,7 @@
+package d1_d2;
 import java.util.Scanner;
 
-public class N1979_¾îµğ¿¡´Ü¾î°¡µé¾î°¥¼öÀÖÀ»±î {
+public class N1979_ì–´ë””ì—ë‹¨ì–´ê°€ë“¤ì–´ê°ˆìˆ˜ìˆì„ê¹Œ {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -12,7 +13,7 @@ public class N1979_¾îµğ¿¡´Ü¾î°¡µé¾î°¥¼öÀÖÀ»±î {
 		for (int t = 0; t < T; t++) {
 
 			int N = sc.nextInt();
-			int K = sc.nextInt(); // ´Ü¾î ±æÀÌ
+			int K = sc.nextInt(); // ï¿½Ü¾ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 			int[][] puzzle = new int[N][N];
 
@@ -24,7 +25,7 @@ public class N1979_¾îµğ¿¡´Ü¾î°¡µé¾î°¥¼öÀÖÀ»±î {
 
 			int sum = 0;
 
-			// °¡·Î
+			// ï¿½ï¿½ï¿½ï¿½
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 
@@ -44,7 +45,7 @@ public class N1979_¾îµğ¿¡´Ü¾î°¡µé¾î°¥¼öÀÖÀ»±î {
 				sum = 0;
 			}
 
-			// ¼¼·Î
+			// ï¿½ï¿½ï¿½ï¿½
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 

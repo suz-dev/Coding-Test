@@ -1,3 +1,4 @@
+package d1_d2;
 import java.util.Arrays;
 import java.util.Scanner;
 

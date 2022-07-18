@@ -1,3 +1,4 @@
+package d1_d2;
 import java.util.Scanner;
 
 public class N1946_간단한압축풀기 {

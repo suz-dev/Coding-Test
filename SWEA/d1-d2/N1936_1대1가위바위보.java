@@ -1,3 +1,4 @@
+package d1_d2;
 import java.util.Scanner;
 
 public class N1936_1대1가위바위보 {

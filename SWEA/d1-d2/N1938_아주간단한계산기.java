@@ -1,6 +1,7 @@
+package d1_d2;
 import java.util.Scanner;
 
-public class N1938_¾ÆÁÖ°£´ÜÇÑ°è»ê±â {
+public class N1938_ì•„ì£¼ê°„ë‹¨í•œê³„ì‚°ê¸° {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
