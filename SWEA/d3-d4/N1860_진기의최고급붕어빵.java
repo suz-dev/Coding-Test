@@ -1,4 +1,5 @@
 package d3_d4;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -35,5 +36,4 @@ public class N1860_진기의최고급붕어빵 {
 				System.out.println("#" + t + " " + "Impossible");
 		}
 	}
-
 }
