@@ -1,4 +1,5 @@
 package d1_d2;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -18,7 +19,5 @@ public class N2063_중간값찾기 {
 		Arrays.sort(arr);
 
 		System.out.println(arr[N / 2]);
-
 	}
-
 }

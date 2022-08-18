@@ -12,7 +12,7 @@ public class N1204_최빈수구하기 {
 
 		int T = Integer.parseInt(br.readLine());
 		for (int t = 1; t <= T; t++) {
-			int[] scores = new int[101];	// 점수 : 0~100 
+			int[] scores = new int[101]; // 점수 : 0~100
 
 			int n = Integer.parseInt(br.readLine()); // tc 번호
 			StringTokenizer st = new StringTokenizer(br.readLine());

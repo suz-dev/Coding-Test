@@ -4,45 +4,41 @@ import java.util.Scanner;
 
 public class Ladder {
 
-	static int[][] ladder = new int[100][100];
-
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
 		for (int t = 1; t <= 10; t++) {
-			int N = sc.nextInt(); // 순서
+			int N = sc.nextInt(); // tc 번호
 
-			// 사다리 배열 채우기
+			int[][] ladder = new int[100][100];
+
 			for (int i = 0; i < 100; i++) {
 				for (int j = 0; j < 100; j++) {
 					ladder[i][j] = sc.nextInt();
 				}
 			}
 
-			int[] dr = { -1, 1 };
-			int start = -1;
+			for (int i = 99; i >= 0; i++) {
+				for (int j = 0; j < 100; j++) {
 
-			// 끝에서 시작
-			for (int c = 0; c < 100; c++) {
-				if (ladder[99][c] == 2) {
-					start = c; // 열
-				}
-			}
+					int[] drc = { -1, 1 }; // 왼, 오 탐색
 
-			for (int r = 99; r >= 0; r--) {
+					// 시작점
+					if (ladder[i][j] == 2) {
 
-				for (int d = 0; d < 2; d++) {
-					// 좌우 탐색
-					if (start + dr[d] >= 0 && start + dr[d] < 100 && ladder[r][start + dr[d]] == 1) {
-
-						while (start + dr[d] >= 0 && start + dr[d] < 100 && ladder[r][start + dr[d]] == 1) {
-							start += dr[d];
+						while (j + drc[0] >= 0 && j + drc[1] < 100) {
+							if (ladder[i][j + drc[0]] == 1) {
+								j += drc[0];
+								break;
+							} else if (ladder[i][j + drc[1]] == 1) {
+								j += drc[1];
+								break;
+							}
 						}
-						break;
 					}
 				}
 			}
-			System.out.println("#" + t + " " + start);
+
 		}
 	}
 }
