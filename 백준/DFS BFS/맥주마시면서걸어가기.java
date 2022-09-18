@@ -40,7 +40,7 @@ public class 맥주마시면서걸어가기 {
 				Loc[s][1] = sc.nextInt(); // 편의점 y
 			}
 
-			// 페스티벌
+			// 페스티벌 (도착)
 			Loc[store + 1][0] = sc.nextInt();
 			Loc[store + 1][1] = sc.nextInt();
 
@@ -64,10 +64,11 @@ public class 맥주마시면서걸어가기 {
 		}
 
 		check[i] = true; // 방문 표시
-
+		
+		// 방문하지  좌표 탐색
 		for (int k = 0; k <= store + 1; k++) {
 			
-			// 방문하지 않은 좌표 탐색
+			// 방문 X
 			if (!check[k]) {
 				
 				// 다음 지점까지의 거리
