@@ -1,57 +1,81 @@
-package BOJ_0914;
+package BOJ_RE;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+// 토마토가 익는데 걸리는 최소 날짜 구하기
 public class 토마토 {
+
+	static class Node {
+		int r, c;
+
+		public Node(int r, int c) {
+			super();
+			this.r = r;
+			this.c = c;
+		}
+	}
+
+	static int M, N, day;
+	static int[][] tomato;
+	static int[][] drc = { { 0, 0, -1, 1 }, { -1, 1, 0, 0 } };
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
-		int M = sc.nextInt(), N = sc.nextInt(); // 가로 세로
+		M = sc.nextInt();
+		N = sc.nextInt();
 
-		int[][] tomato = new int[N][M];
-		int cnt = 0, days = 0;
+		tomato = new int[N][M];
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < M; j++)
+				tomato[i][j] = sc.nextInt();
 
-		Queue<int[]> que = new LinkedList<>();
+		bfs();
 
-		for (int n = 0; n < N; n++)
-			for (int m = 0; m < M; m++) {
-				tomato[n][m] = sc.nextInt(); // 배열 입력
+		if (checkDone())
+			System.out.println(day);
+		else
+			System.out.println(-1);
+	}
 
-				// 익은 토마토일 경우
-				if (tomato[n][m] == 1)
-					que.add(new int[] { n, m });
+	private static void bfs() {
+		Queue<Node> q = new LinkedList<>();
 
-				// 안익은 토마토가 있을 경우
-				else if (tomato[n][m] == 0)
-					cnt++;
-			}
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < M; j++)
+				if (tomato[i][j] == 1)
+					q.add(new Node(i, j));
 
-		while (cnt > 0 && !que.isEmpty()) {
-			for (int s = que.size(); s > 0; s--) { // queue 사이즈 만큼 반복
-				int[] tmp = que.poll();
+		while (!q.isEmpty()) {
 
-				// 사방탐색
-				int[] dx = { 0, 0, -1, 1 };
-				int[] dy = { -1, 1, 0, 0 };
+			int T = q.size();
+			for (int t = 0; t < T; t++) {
+				Node node = q.poll();
 
 				for (int d = 0; d < 4; d++) {
-					int cx = tmp[1] + dx[d];
-					int cy = tmp[0] + dy[d];
+					int cx = node.r + drc[0][d];
+					int cy = node.c + drc[1][d];
 
-					if (cy < 0 || cx < 0 || cy >= N || cx >= M || tomato[cy][cx] != 0)
-						continue;
-
-					cnt--;
-					tomato[cy][cx] = 1;
-					que.add(new int[] { cy, cx });
+					if (cx >= 0 && cx < N && cy >= 0 && cy < M && tomato[cx][cy] == 0) {
+						tomato[cx][cy] = 1;
+						q.add(new Node(cx, cy));
+					}
 				}
 			}
-			
-			days++;
+			day++;
 		}
-		System.out.println(cnt == 0 ? days : -1);	// 일 수 갱신
+		day--; // 시작일 빼주기
+	}
+
+	public static boolean checkDone() {
+
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < M; j++)
+				if (tomato[i][j] == 0)
+					return false;
+
+		return true;
 	}
 }
