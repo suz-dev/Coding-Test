@@ -1,162 +1,116 @@
-package 배열특공대;
+package 백준.boj_0424;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class 배열돌리기4 {
 
-	static int N, M, K;
+    static int N, M, K;
+    static int[][] rotation;
+    static int[][] arr;
+    static int min = Integer.MAX_VALUE;
 
-	static int[][] arr, copy;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-	static int[][] op, tmp;
-	static boolean[] isSelected;
-	static int min = Integer.MAX_VALUE;
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
 
-	// 시계방향으로 한칸씩 회전
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+        arr = new int[N+1][M+1];
 
-		N = sc.nextInt();
-		M = sc.nextInt();
-		K = sc.nextInt(); // 회전 연산의 개수 1<= K <=6 : 연산 순서에 따라 결과가 달라짐 최소값을 구해라
+        for (int i = 1; i <= N; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 1; j <= M; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-		// 배열 입력
-		arr = new int[N + 1][M + 1];
-		copy = new int[N + 1][M + 1];
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= M; j++) {
-				arr[i][j] = sc.nextInt();
-			}
-		}
+        rotation = new int[K][3];
 
-		// 연산 입력 -> 순열로 배열 케이스 생성
-		op = new int[K][3];
-		tmp = new int[K][3];
-		isSelected = new boolean[K];
-		for (int i = 0; i < K; i++) {
-			op[i][0] = sc.nextInt(); // r
-			op[i][1] = sc.nextInt(); // c
-			op[i][2] = sc.nextInt(); // s
-		}
+        for (int k = 0; k < K; k++) {
+            st = new StringTokenizer(br.readLine());
+            rotation[k][0] = Integer.parseInt(st.nextToken());
+            rotation[k][1] = Integer.parseInt(st.nextToken());
+            rotation[k][2] = Integer.parseInt(st.nextToken());
+        }
 
-		Permutation(0);
-		System.out.println(min);
-	}
+        permutation(0, new int[K], new boolean[K]);
 
-	static void Permutation(int cnt) {
-		if (cnt == K) { // 새로운 순열 생성 (이 순서로 rotation 실행?)
-			rotation();
-			return;
-		}
+        System.out.println(min);
+    }
 
-		for (int i = 0; i < K; i++) {
-			if (!isSelected[i]) {
-				tmp[cnt] = op[i];
+    public static void permutation(int cnt, int[] arr, boolean[] visited) {
+        if (cnt == K) {
+            rotate(arr);
+            return;
+        }
+        for (int i = 0; i < K; i++) {
+            if (visited[i]) continue;
+            visited[i] = true;
+            arr[cnt] = i;
+            permutation(cnt + 1, arr, visited);
+            visited[i] = false;
+        }
+    }
 
-				isSelected[i] = true;
-				Permutation(cnt + 1);
-				isSelected[i] = false;
-			}
-		}
-	}
+    public static void rotate(int[] arr) {
+        int[][] tmp = copyArr();
 
-	static void rotation() {
+        for (int k = 0; k < K; k++) {
+            int r = rotation[arr[k]][0];
+            int c = rotation[arr[k]][1];
+            int S = rotation[arr[k]][2];
 
-		copy(); // 카피 수행
+            for (int s = 1; s <= S; s++) {
+                //위
+                int upTmp = tmp[r - s][c + s];
+                for (int y = c + s; y > c - s; y--) {
+                    tmp[r - s][y] = tmp[r - s][y - 1];
+                }
+                //오른쪽
+                int rightTmp = tmp[r + s][c + s];
+                for (int x = r + s; x > r - s; x--) {
+                    tmp[x][c + s] = tmp[x - 1][c + s];
+                }
+                tmp[r - s + 1][c + s] = upTmp;
+                //아래
+                int leftTmp = tmp[r + s][c - s];
+                for (int y = c - s; y < c + s; y++) {
+                    tmp[r + s][y] = tmp[r + s][y + 1];
+                }
+                tmp[r + s][c + s - 1] = rightTmp;
+                //왼쪽
+                for (int x = r - s; x < r + s; x++) {
+                    tmp[x][c - s] = tmp[x + 1][c - s];
+                }
+                tmp[r + s - 1][c - s] = leftTmp;
+            }
+        }
 
-		for (int i = 0; i < K; i++) { // 수행할 연산 횟수
+        findMinVal(tmp);
+    }
 
-			int[] tmpOp = tmp[i]; // 연산 조건
-			int r = tmpOp[0];
-			int c = tmpOp[1];
-			int s = tmpOp[2];
+    public static int[][] copyArr() {
+        int[][] tmp = new int[N+1][M+1];
 
-			int startR = r - s;
-			int startC = c - s;
-			int endR = r + s;
-			int endC = c + s;
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= M; j++) {
+                tmp[i][j] = arr[i][j];
+            }
+        }
 
-			while (startR <= endR && startC <= endC) {
-				Queue<Integer> q = new LinkedList<>();
+        return tmp;
+    }
 
-				int dir = 1; // 우하좌상
-
-				switch (dir) {
-				case 1: // 우
-					for (int d = startC; d <= endC; d++) {
-						q.add(copy[startR][d]);
-						if (d > startC) {
-							copy[startR][d] = q.poll(); // 이전값 넣기
-						}
-					}
-
-					dir = 2;
-					break;
-				case 2: // 하
-					for (int d = startR + 1; d <= endR; d++) {
-						q.add(copy[d][endC]);
-						copy[d][endC] = q.poll(); // 이전값 넣기
-					}
-
-					dir = 3;
-					break;
-				case 3: // 좌
-					for (int d = endC - 1; d >= startC; d--) {
-						q.add(copy[endR][d]);
-						copy[endR][d] = q.poll(); // 이전값 넣기
-					}
-
-					dir = 4;
-					break;
-				case 4: // 상
-					for (int d = endR - 1; d >= startR; d--) {
-						q.add(copy[d][startC]);
-						copy[d][startC] = q.poll(); // 이전값 넣기
-					}
-
-					dir = 1;
-
-					startR++;
-					startC++;
-					endR--;
-					endC--;
-
-					break;
-				}
-			}
-		}
-		findMin();
-	}
-
-	static void findMin() { // 해당 case에서 연산 모두 수행 후 최소값
-
-		for (int i = 1; i <= N; i++) {
-			int sum = 0;
-			for (int j = 1; j <= M; j++) {
-				sum += copy[i][j];
-			}
-			if (min > sum)
-				min = sum;
-		}
-	}
-
-	static void copy() {
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= M; j++) {
-				copy[i][j] = arr[i][j];
-			}
-		}
-	}
-
-	// 확인용
-	static void print() {
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= M; j++) {
-				System.out.print(copy[i] + " ");
-			}
-			System.out.println();
-		}
-	}
+    public static void findMinVal(int[][] tmp) {
+        for (int i = 1; i <= N; i++) {
+            int sum = 0;
+            for (int j = 1; j <= M; j++) {
+                sum += tmp[i][j];
+            }
+            if (min > sum) min = sum;
+        }
+    }
 }
