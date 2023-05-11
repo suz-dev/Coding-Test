@@ -1,72 +1,77 @@
-package BOJ_0912;
+package 백준.boj_230510;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.StringTokenizer;
+
+// 가중치
+// 루트노드 : 1
+// dfs
 
 public class 트리의지름 {
 
-	static ArrayList<Node>[] adj;
-	static boolean[] visited;
-	static int max = 0;
-	static int node;
+    static class Node {
+        int idx, cnt;
 
-	public static void main(String args[]) {
-		Scanner scan = new Scanner(System.in);
+        Node(int idx, int cnt) {
+            this.idx = idx;
+            this.cnt = cnt;
+        }
+    }
 
-		int V = scan.nextInt();
-		adj = new ArrayList[V + 1];
-		for (int i = 1; i < V + 1; i++) {
-			adj[i] = new ArrayList<>();
-		}
+    static ArrayList<Node> nodeList[];
+    static int N;
+    static int max = 0;
+    static boolean visited[];
+    static int maxIdx = 0;
 
-		for (int i = 0; i < V; i++) {
-			int n1 = scan.nextInt();
-			while (true) {
-				int n2 = scan.nextInt();
-				if (n2 == -1)
-					break;
-				int d = scan.nextInt();
-				adj[n1].add(new Node(n2, d));
-			}
-		}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-		// 임의의 노드(1)에서 부터 가장 먼 노드를 찾는다. 이때 찾은 노드를 node에 저장한다.
-		visited = new boolean[V + 1];
-		dfs(1, 0);
+        N = Integer.parseInt(br.readLine());
 
-		// node에서 부터 가장 먼 노트까지의 거리를 구한다.
-		visited = new boolean[V + 1];
-		dfs(node, 0);
+        nodeList = new ArrayList[N + 1];
+        for (int i = 0; i <= N; i++) {
+            nodeList[i] = new ArrayList<>();
+        }
 
-		System.out.println(max);
-	}
+        for (int i = 0; i < N - 1; i++) {
+            st = new StringTokenizer(br.readLine());
 
-	public static void dfs(int num, int dim) {
+            int parent = Integer.parseInt(st.nextToken());
+            int child = Integer.parseInt(st.nextToken());
+            int weight = Integer.parseInt(st.nextToken());
 
-		// 최대값 갱신
-		if (dim > max) {
-			max = dim;
-			node = num;
-		}
+            nodeList[parent].add(new Node(child, weight));
+            nodeList[child].add(new Node(parent, weight));
+        }
 
-		visited[num] = true;
+        visited = new boolean[N + 1];
+        visited[1] = true;
+        dfs(1, 0);
 
-		for (int i = 0; i < adj[num].size(); i++) {
-			Node node = adj[num].get(i);
-			if (visited[node.num] == false) {
-				dfs(node.num, node.dim + dim);
-				visited[node.num] = true;
-			}
-		}
-	}
+        visited = new boolean[N + 1];
+        visited[maxIdx] = true;
+        dfs(maxIdx, 0);
+        System.out.println(max);
+    }
 
-	public static class Node {
-		int num;
-		int dim;
+    public static void dfs(int idx, int cnt) {
+        // 갱신
+        if (max < cnt) {
+            max = cnt;
+            maxIdx = idx;
+        }
 
-		public Node(int num, int dim) {
-			this.num = num;
-			this.dim = dim;
-		}
-	}
+        for (Node node : nodeList[idx]) {
+            if (!visited[node.idx]) {
+                visited[node.idx] = true;
+                dfs(node.idx, cnt + node.cnt);
+            }
+        }
+    }
 }
+
