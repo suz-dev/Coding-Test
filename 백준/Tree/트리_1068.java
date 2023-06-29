@@ -1,4 +1,4 @@
-package 백준.boj_230628;
+package 백준.boj_230629;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,67 +6,37 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class 트리_1068 {
-
-    static int n;
-    static int[] parent;
-    static boolean[] visited;
+    static int N, removeNum, result;
+    static boolean[][] parentTree;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());    // node 개수
-        parent = new int[n];
-        visited = new boolean[n];
+        N = Integer.parseInt(br.readLine());
+        parentTree = new boolean[N][N];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++) {
-            // 부모 노드 입력
-            parent[i] = Integer.parseInt(st.nextToken());
+        int start = 0;
+        for (int i = 0; i < N; i++) {
+            int value = Integer.parseInt(st.nextToken());
+
+            if (value == -1) start = i;
+            else parentTree[value][i] = true;
         }
 
-        int remove = Integer.parseInt(br.readLine());   // 지울 노드
-        removeNode(remove);
-
-        System.out.println(countLeaf());
-
+        removeNum = Integer.parseInt(br.readLine());
+        result = 0;
+        if (start != removeNum) dfs(start);
+        System.out.println(result);
     }
 
-    // node 삭제
-    private static void removeNode(int idx) {
-        parent[idx] = -2;
-        visited[idx] = true;
-
-        for (int i = 0; i < n; i++) {
-            if (parent[i] == idx)
-                removeNode(i);
+    public static void dfs(int idx) {
+        boolean check = false;
+        for (int i = 0; i < N; i++) {
+            if (!parentTree[idx][i] || i == removeNum) continue;
+            check = true;
+            dfs(i);
         }
-    }
-
-    private static int countLeaf() {
-        int sum = 0;
-
-        for (int i = 0; i < n; i++) {
-            if (visited[i])
-                continue;
-
-            if (isLeaf(i))
-                sum++;
-        }
-
-        return sum;
-    }
-
-    private static boolean isLeaf(int idx) {
-        visited[idx] = true;
-
-        boolean leafTrue = true;
-        for (int i = 0; i < n; i++) {
-            if (parent[i] == idx) {
-                leafTrue = false;
-                break;
-            }
-        }
-
-        return leafTrue;
+        if (!check) result++;
     }
 }
