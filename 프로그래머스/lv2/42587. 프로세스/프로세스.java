@@ -11,6 +11,7 @@ class Solution {
             Node tmp = q.poll();
             boolean state = false;
             
+            // 우선순위 점검
             for(Node n : q){
                 if(tmp.val < n.val){
                     state = true;
@@ -25,6 +26,7 @@ class Solution {
             
             cnt++;
             
+            // location 일치 값
             if(tmp.loc) {
                 answer = cnt;
             }
