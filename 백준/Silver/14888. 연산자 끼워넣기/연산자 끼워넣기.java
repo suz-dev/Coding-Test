@@ -1,27 +1,22 @@
 import java.io.*;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class Main {
 
-    static int N, R;
+    static int N;
     static int[] nums, operators;
-    static boolean[] isSelected;
-    static int[] arr;
-
-    static int minVal = 1000000001;
-    static int maxVal = -1000000001;
+    static int minVal = Integer.MAX_VALUE;
+    static int maxVal = Integer.MIN_VALUE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         N = Integer.parseInt(br.readLine());
-        R = N - 1;
 
         nums = new int[N];
-        operators = new int[R];
-        isSelected = new boolean[R];
-        arr = new int[R];
+        operators = new int[4];
 
         // 숫자
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -31,17 +26,11 @@ public class Main {
 
         // 연산자
         st = new StringTokenizer(br.readLine());
-        int idx = 0;
         for (int i = 0; i < 4; i++) {
-            int tmp = Integer.parseInt(st.nextToken());
-            if(tmp == 0) continue;
-
-            for(int j = 0; j < tmp; j++){
-                operators[idx++] = i;
-            }
+            operators[i] = Integer.parseInt(st.nextToken());
         }
 
-        permutation(0);
+        dfs(nums[0], 1);
 
         bw.write(maxVal + "\n" + minVal);
 
@@ -50,46 +39,24 @@ public class Main {
         br.close();
     }
 
-    // 연산자 순열 만들기
-    public static void permutation(int cnt){
-        if(cnt == R) {
-            calculation();
+    public static void dfs(int val, int cnt){
+        if(cnt == N) {
+            maxVal = Math.max(maxVal, val);
+            minVal = Math.min(minVal, val);
             return;
         }
 
-        for(int i = 0; i < R; i++){
-            if(isSelected[i]) continue;
+        for(int i = 0; i < 4; i++){
+            if(operators[i] > 0){
+                operators[i]--; // isSelected
 
-            arr[cnt] = operators[i];
-            isSelected[i] = true;
-            permutation(cnt+1);
-            isSelected[i] = false;
-        }
-    }
+                if(i == 0) dfs(val + nums[cnt], cnt+1);
+                else if(i == 1) dfs(val - nums[cnt], cnt+1);
+                else if(i == 2) dfs(val * nums[cnt], cnt+1);
+                else dfs(val / nums[cnt], cnt+1);
 
-    // 계산
-    public static void calculation(){
-        int val = nums[0];
-
-        for(int i = 0; i < R; i++){
-            int op = arr[i];
-            int nextNum = nums[i+1];
-
-            if(op == 0) val += nextNum;
-            else if(op == 1) val -= nextNum;
-            else if(op == 2) val *= nextNum;
-            else if(op == 3) {
-                if(val < 0){
-                    val *= (-1);
-                    val /= nextNum;
-                    val *= (-1);
-                }else if (val > 0){
-                    val /= nextNum;
-                }
+                operators[i]++;
             }
         }
-
-        if(val < minVal) minVal = val;
-        if(val > maxVal) maxVal = val;
     }
 }
