@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -13,11 +12,10 @@ public class Main {
         StringTokenizer st;
 
         wheels = new char[5][8];
-        wheels[1] = br.readLine().toCharArray();
-        wheels[2] = br.readLine().toCharArray();
-        wheels[3] = br.readLine().toCharArray();
-        wheels[4] = br.readLine().toCharArray();
-        
+        for(int i = 1; i < 5; i++){
+            wheels[i] = br.readLine().toCharArray();
+        }
+
         int K = Integer.parseInt(br.readLine());    // 회전 횟수
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
