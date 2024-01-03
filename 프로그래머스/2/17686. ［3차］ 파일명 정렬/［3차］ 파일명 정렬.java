@@ -1,7 +1,6 @@
 import java.util.*;
 
 class Solution {    
-    
     public static String[] solution(String[] files) {
         String[] answer = new String[files.length];
         
@@ -16,16 +15,14 @@ class Solution {
         for(int i = 0; i < files.length; i++){
             String file = files[i];
             
-            // head, number, tail 나누기
+            // head, tail 나누기
             String tmpFile = file.replaceAll("[0-9]", "@");
-            String[] tmp = tmpFile.split("@+"); // head, tail
+            String[] tmp = tmpFile.split("@+"); // head, tail        
             
-            int start = tmp[0].length();
-        
-            String number = file.substring(start);
-            number = number.replaceAll("[a-zA-Z.-]", " ");
-            String[] num = number.split(" ");
-            int n = Integer.parseInt(num[0]);
+            // number 추출
+            String number = file.substring(tmp[0].length());  // head 이후부터 check
+            String[] num = number.replaceAll("[a-zA-Z.-]", " ").split(" ");  // 숫자가 아닌 부분 공백으로 대체 && split
+            int n = Integer.parseInt(num[0]);   // int 로 변환
             
             // idx, head, num
             File now = new File(i, tmp[0].toUpperCase(), n);
