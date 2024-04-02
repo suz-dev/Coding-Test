@@ -1,113 +1,108 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
+// 나무재테크
 public class Main {
-
     static int N, M, K;
-    static int[][] A, map;
-    static int[][] drc = {{-1, -1, -1, 0, 0, 1, 1, 1}, {-1, 0, 1, -1, 1, -1, 0, 1}}; // 8방 탐색
-    static Deque<Tree> tree_list;
+    static int[][] A;
+    static int[][] map;
+    static Deque<Tree> treeInfo;
+    static int[][] drc = {{0,0,1,-1,1,1,-1,-1}, {1,-1,0,0,1,-1,1,-1}};  // 8방 탐색
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());   // 산 나무 수
         K = Integer.parseInt(st.nextToken());
 
+        // 초기 땅 상태
         map = new int[N][N];
-        A = new int[N][N];  // 양분정보
+        for(int i = 0; i < N; i++){
+            Arrays.fill(map[i], 5);
+        }
 
-        for (int i = 0; i < N; i++) {
+        // 겨울에 추가되는 양분
+        A = new int[N][N];
+        for(int r = 0; r < N; r++){
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < N; j++) {
-                A[i][j] = Integer.parseInt(st.nextToken());
-                map[i][j] = 5;
+            for(int c = 0; c < N; c++){
+                A[r][c] = Integer.parseInt(st.nextToken());
             }
         }
 
-        tree_list = new LinkedList<>();
-        for (int i = 0; i < M; i++) {
+        // 나무 정보 (나무 나이 오름차순)
+        treeInfo = new LinkedList<>();
+
+        for(int i = 0; i < M; i++){
             st = new StringTokenizer(br.readLine());
 
             int r = Integer.parseInt(st.nextToken()) - 1;
             int c = Integer.parseInt(st.nextToken()) - 1;
-            int age = Integer.parseInt(st.nextToken());   //  나이
+            int age = Integer.parseInt(st.nextToken());
 
-            tree_list.add(new Tree(r, c, age));
+            Tree tree = new Tree(r, c, age);
+            treeInfo.add(tree);
         }
 
-        while (K-- > 0) {
-            Queue<Tree> die_tree = new LinkedList<>();
+        while(K-- > 0){
+            Queue<Tree> nowTrees = new LinkedList<>();
+            Queue<Tree> deadTrees = new LinkedList<>();
 
-            for (int i = 0; i < tree_list.size(); i++) {
-                Tree tree = tree_list.poll();
-                if (map[tree.r][tree.c] < tree.age) {
-                    die_tree.add(tree);
-                    i--;
-                } else {
-                    map[tree.r][tree.c] -= tree.age;
-                    tree_list.add(new Tree(tree.r, tree.c, tree.age + 1));
+            // 봄 - 양분 섭취
+            while (!treeInfo.isEmpty()){
+                Tree now = treeInfo.poll();
+                if(map[now.r][now.c] < now.age) deadTrees.add(now);
+                else {
+                    map[now.r][now.c] -= now.age;
+                    now.age++;
+                    nowTrees.add(now);
                 }
             }
 
-            for(Tree tree : die_tree) summer(tree);
+            // 여름 - 죽은 나무 -> 양분
+            while(!deadTrees.isEmpty()){
+                Tree now = deadTrees.poll();
+                map[now.r][now.c] += (now.age / 2);
+            }
+            
+            // 가을 - 나무 번식
+            while(!nowTrees.isEmpty()){
+                // 번식 대상 나무
+                Tree now = nowTrees.poll();
+                treeInfo.add(now);
 
-            autumn();
-            winter();
-        }
+                // 번식 대상 아님
+                if(now.age % 5 != 0) continue;
 
-        System.out.println(tree_list.size());
-    }
-    public static void summer(Tree tree) {
-        map[tree.r][tree.c] += (tree.age / 2);
-    }
-    
-    public static void autumn() {
-        Queue<Tree> tmpQ = new LinkedList<>();
-        for (Tree tree : tree_list) {
-            if (tree.age % 5 == 0) tmpQ.add(tree);
-        }
-        while (!tmpQ.isEmpty()) {
-            Tree tree = tmpQ.poll();
+                for(int d = 0; d < 8; d++){
+                    int nr = now.r + drc[0][d];
+                    int nc = now.c + drc[1][d];
 
-            for (int d = 0; d < 8; d++) {
-                int nr = tree.r + drc[0][d];
-                int nc = tree.c + drc[1][d];
+                    if(nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+                    treeInfo.addFirst(new Tree(nr, nc, 1));
+                }
+            }
 
-                if (nr < 0 || nc < 0 || nr >= N || nc >= N) continue;
-                tree_list.addFirst(new Tree(nr, nc, 1));    //  나이어린 나무부터 탐색
+            // 겨울 - 양분 추가
+            for (int r = 0; r < N; r++){
+                for(int c = 0; c < N; c++){
+                    map[r][c] += A[r][c];
+                }
             }
         }
-    }
-    
-    public static void winter() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                map[i][j] += A[i][j];
-            }
-        }
+
+        System.out.println(treeInfo.size());
     }
 
-    public static class Tree {
+    static class Tree{
         int r, c, age;
 
-        public Tree(int r, int c, int age) {
+        public Tree(int r, int c, int age){
             this.r = r;
             this.c = c;
             this.age = age;
-        }
-
-        @Override
-        public String toString() {
-            return "Tree{" +
-                    "r=" + r +
-                    ", c=" + c +
-                    ", age=" + age +
-                    '}';
         }
     }
 }
