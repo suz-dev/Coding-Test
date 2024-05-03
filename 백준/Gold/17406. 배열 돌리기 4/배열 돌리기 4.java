@@ -1,15 +1,105 @@
-
+import java.lang.reflect.Array;
+import java.util.*;
 import java.io.*;
-import java.util.StringTokenizer;
 
+// 배열돌리기4
 public class Main {
-
     static int N, M, K;
-    static int[][] rotation;
-    static int[][] arr;
-    static int min = Integer.MAX_VALUE;
+    static int[][] map, rotationInfo;
+    static int[] arr;
+    static boolean[] isSelected;
+    static ArrayList<int[]> permList = new ArrayList<>();
 
-    public static void main(String[] args) throws Exception {
+    public static int solution(){
+        int answer = Integer.MAX_VALUE;
+
+        arr = new int[K];
+        isSelected = new boolean[K];
+
+        permutation(0);
+
+        // 배열 돌리기
+        for(int[] perm : permList){
+            int[][] tmpMap = arrRotation(perm);
+            answer = Math.min(answer, calMin(tmpMap));
+        }
+
+        return answer;
+    }
+
+    // 배열돌리기
+    static int[][] arrRotation(int[] perm){
+        // 회전할 배열
+        int[][] newMap = new int[N + 2][M + 2];
+        for(int r = 1; r <= N; r++){
+            for(int c = 1; c <= M; c++){
+                newMap[r][c] = map[r][c];
+            }
+        }
+
+        for(int k = 0; k < K; k++){
+            int[] now = rotationInfo[perm[k]];
+            int r = now[0];
+            int c = now[1];
+            int s = now[2];
+
+            while(s > 0){
+                int startR = r - s;
+                int endR = r + s;
+                int startC = c - s;
+                int endC = c + s;
+
+                int a = newMap[startR][startC];
+
+                for(int i = startR; i < endR; i++) newMap[i][startC] = newMap[i + 1][startC];
+                for(int j = startC; j < endC; j++) newMap[endR][j] = newMap[endR][j + 1];
+                for(int i = endR; i > startR; i--) newMap[i][endC] = newMap[i - 1][endC];
+                for(int j = endC; j > startC; j--) newMap[startR][j] = newMap[startR][j - 1];
+
+                newMap[startR][startC + 1] = a;
+
+                s--;
+            }
+        }
+
+        return newMap;
+    }
+
+    // 최소값 계산
+    static int calMin(int[][] newMap){
+        int min = Integer.MAX_VALUE;
+
+        for(int r = 1; r <= N; r++){
+            int sum = 0;
+            for(int c = 1; c <= M; c++){
+                sum += newMap[r][c];
+            }
+
+            min = Math.min(min, sum);
+        }
+        return min;
+    }
+
+    // 순열
+    static void permutation(int cnt){
+        if(cnt == K){
+            int[] nArr = Arrays.copyOf(arr, K);
+            permList.add(nArr);
+            return;
+        }
+
+        for(int i = 0; i < K; i++){
+            if(isSelected[i]) continue;
+
+            isSelected[i] = true;
+            arr[cnt] = i;
+
+            permutation(cnt + 1);
+            isSelected[i] = false;
+        }
+    }
+
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
@@ -17,99 +107,22 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        arr = new int[N+1][M+1];
-
-        for (int i = 1; i <= N; i++) {
+        map = new int[N + 2][M + 2];
+        for(int r = 1; r <= N; r++){
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= M; j++) {
-                arr[i][j] = Integer.parseInt(st.nextToken());
+            for(int c = 1; c <= M; c++){
+                map[r][c] = Integer.parseInt(st.nextToken());
             }
         }
 
-        rotation = new int[K][3];
-
-        for (int k = 0; k < K; k++) {
+        rotationInfo = new int[K][3];
+        for(int i = 0; i < K; i++){
             st = new StringTokenizer(br.readLine());
-            rotation[k][0] = Integer.parseInt(st.nextToken());
-            rotation[k][1] = Integer.parseInt(st.nextToken());
-            rotation[k][2] = Integer.parseInt(st.nextToken());
+            rotationInfo[i][0] = Integer.parseInt(st.nextToken());
+            rotationInfo[i][1] = Integer.parseInt(st.nextToken());
+            rotationInfo[i][2] = Integer.parseInt(st.nextToken());
         }
 
-        permutation(0, new int[K], new boolean[K]);
-
-        System.out.println(min);
-    }
-
-    public static void permutation(int cnt, int[] arr, boolean[] visited) {
-        if (cnt == K) {
-            rotate(arr);
-            return;
-        }
-        for (int i = 0; i < K; i++) {
-            if (visited[i]) continue;
-            visited[i] = true;
-            arr[cnt] = i;
-            permutation(cnt + 1, arr, visited);
-            visited[i] = false;
-        }
-    }
-
-    public static void rotate(int[] arr) {
-        int[][] tmp = copyArr();
-
-        for (int k = 0; k < K; k++) {
-            int r = rotation[arr[k]][0];
-            int c = rotation[arr[k]][1];
-            int S = rotation[arr[k]][2];
-
-            for (int s = 1; s <= S; s++) {
-                //위
-                int upTmp = tmp[r - s][c + s];
-                for (int y = c + s; y > c - s; y--) {
-                    tmp[r - s][y] = tmp[r - s][y - 1];
-                }
-                //오른쪽
-                int rightTmp = tmp[r + s][c + s];
-                for (int x = r + s; x > r - s; x--) {
-                    tmp[x][c + s] = tmp[x - 1][c + s];
-                }
-                tmp[r - s + 1][c + s] = upTmp;
-                //아래
-                int leftTmp = tmp[r + s][c - s];
-                for (int y = c - s; y < c + s; y++) {
-                    tmp[r + s][y] = tmp[r + s][y + 1];
-                }
-                tmp[r + s][c + s - 1] = rightTmp;
-                //왼쪽
-                for (int x = r - s; x < r + s; x++) {
-                    tmp[x][c - s] = tmp[x + 1][c - s];
-                }
-                tmp[r + s - 1][c - s] = leftTmp;
-            }
-        }
-
-        findMinVal(tmp);
-    }
-
-    public static int[][] copyArr() {
-        int[][] tmp = new int[N+1][M+1];
-
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= M; j++) {
-                tmp[i][j] = arr[i][j];
-            }
-        }
-
-        return tmp;
-    }
-
-    public static void findMinVal(int[][] tmp) {
-        for (int i = 1; i <= N; i++) {
-            int sum = 0;
-            for (int j = 1; j <= M; j++) {
-                sum += tmp[i][j];
-            }
-            if (min > sum) min = sum;
-        }
+        System.out.println(solution());
     }
 }
