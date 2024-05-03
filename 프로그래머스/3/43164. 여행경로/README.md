@@ -1,6 +1,6 @@
 # [level 3] 여행경로 - 43164 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43164?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43164) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 05월 01일 17:55:30
+2024년 05월 03일 21:44:13
 
 ### 문제 설명
 
