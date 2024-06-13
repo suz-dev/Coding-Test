@@ -3,17 +3,17 @@ import java.io.*;
 
 public class Main {
 
-    static final int INF = Integer.MAX_VALUE;
     static int N, M;
-    static int[] dist;
-    static ArrayList<Node>[] adjList;
+    static ArrayList<int[]>[] adjList;
+    static boolean[] visited;
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());   // 알고 싶은 쌍
+        M = Integer.parseInt(st.nextToken());
 
         adjList = new ArrayList[N + 1];
         for(int i = 1; i <= N; i++) adjList[i] = new ArrayList<>();
@@ -25,47 +25,36 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
 
-            // 양방향
-            adjList[a].add(new Node(b, cost));
-            adjList[b].add(new Node(a, cost));
+            adjList[a].add(new int[]{b, cost});
+            adjList[b].add(new int[]{a, cost});
         }
 
-        dist = new int[N + 1];
-        while(M-- > 0){
+        while(M-- > 0) {
             st = new StringTokenizer(br.readLine());
 
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
-            Arrays.fill(dist, INF);
-            dijkstra(start);
-            System.out.println(dist[end]);
+            visited = new boolean[N + 1];
+            dfs(a, b, 0);
         }
+
+        bw.flush();
+        bw.close();
+        br.close();
     }
 
-    public static void dijkstra(int start){
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.cost - o2.cost);
-        pq.add(new Node(start, 0));
-        dist[start] = 0;
-
-        while(!pq.isEmpty()){
-            Node now = pq.poll();
-
-            for(Node next : adjList[now.node]){
-                if(dist[next.node] > dist[now.node] + next.cost){
-                    dist[next.node] = dist[now.node] + next.cost;
-                    pq.add(new Node(next.node, dist[next.node]));
-                }
-            }
+    public static void dfs(int from, int to, int cost) throws IOException {
+        if(from == to){
+            bw.write(cost + "\n");
         }
-    }
 
-    static class Node{
-        int node, cost;
+        visited[from] = true;
 
-        public Node(int node, int cost){
-            this.node = node;
-            this.cost = cost;
+        for(int[] next : adjList[from]){
+            if(visited[next[0]]) continue;
+
+            dfs(next[0], to, cost + next[1]);
         }
     }
 }
