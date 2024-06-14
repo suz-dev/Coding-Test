@@ -30,29 +30,7 @@ public class Main {
         for(int d = 0; d < 4; d++){
             int[][] newMap = move(d, nowMap);
 
-            checkMax(newMap);
-
             dfs(cnt + 1, newMap);
-        }
-    }
-
-    public static boolean checkTwoMap(int[][] nowMap, int[][] newMap){
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if(nowMap[i][j] != newMap[i][j]) return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static void checkMax(int[][] nowMap){
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if(nowMap[i][j] > max) {
-                    max = nowMap[i][j];
-                }
-            }
         }
     }
 
@@ -84,6 +62,7 @@ public class Main {
 
                 for(int i = 0; i < N; i++){
                     if(newMap[i][j] != 0) {
+                        max = Math.max(max, newMap[i][j]);
                         q.add(newMap[i][j]);
                         newMap[i][j] = 0;
                     }
@@ -120,6 +99,7 @@ public class Main {
 
                 for(int j = 0; j < N; j++){
                     if(newMap[i][j] != 0) {
+                        max = Math.max(max, newMap[i][j]);
                         q.add(newMap[i][j]);
                         newMap[i][j] = 0;
                     }
@@ -156,6 +136,7 @@ public class Main {
 
                 for(int i = N - 1; i >= 0; i--){
                     if(newMap[i][j] != 0) {
+                        max = Math.max(max, newMap[i][j]);
                         q.add(newMap[i][j]);
                         newMap[i][j] = 0;
                     }
@@ -193,6 +174,7 @@ public class Main {
                 // 갱신
                 for(int j = N - 1; j >= 0; j--){
                     if(newMap[i][j] != 0) {
+                        max = Math.max(max, newMap[i][j]);
                         q.add(newMap[i][j]);
                         newMap[i][j] = 0;
                     }
