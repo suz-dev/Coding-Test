@@ -14,9 +14,11 @@ public class Main {
 
             int n = Integer.parseInt(br.readLine());
 
+            ArrayList<String> tmpList = new ArrayList<>();
+            while(n-- > 0) tmpList.add(br.readLine());
+
             flag = true;
-            while(n-- > 0){
-                String num = br.readLine();
+            for(String num : tmpList){
                 char ch = num.charAt(0);
 
                 ArrayList<String> list = hashMap.getOrDefault(ch, new ArrayList<>());
@@ -41,6 +43,8 @@ public class Main {
                 if(flag) {
                     list.add(num);
                     hashMap.put(ch, list);
+                }else{
+                    break;
                 }
             }
 
