@@ -1,29 +1,28 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
 
-public class Main {
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
+import java.util.*;
+import java.io.*;
 
-		ArrayList<Integer> list = new ArrayList<>();
+public class Main{
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-		for (int i = 0; i < N; i++) {
-			list.add(Integer.parseInt(br.readLine()));
-		}
+        int n = Integer.parseInt(st.nextToken());
+        ArrayList<Integer> arr = new ArrayList<>();
 
-		Collections.sort(list);
+        for(int i = 0; i < n; i++){
+            st = new StringTokenizer(br.readLine());
+            arr.add(Integer.parseInt(st.nextToken()));
+        }
 
-		StringBuilder sb = new StringBuilder();
+        Collections.sort(arr);
 
-		for (Integer i : list) {
-			sb.append(i).append("\n");
-		}
-		
-		System.out.println(sb.toString());
-	}
+        StringBuilder sb = new StringBuilder();
+        for(Integer i : arr){
+            sb.append(i).append("\n");
+        }
+
+        System.out.println(sb.toString());
+    }
 }
